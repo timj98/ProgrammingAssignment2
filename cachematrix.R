@@ -2,6 +2,8 @@
 
 makeCacheMatrix <- function(x = matrix()) {
   cacheMatrix <- NULL
+  
+  ## the getters and setters
   set <- function(y){
     x <<- y
     cacheMatrix <<- NULL
@@ -9,6 +11,8 @@ makeCacheMatrix <- function(x = matrix()) {
   get <- function() x
   setmatrix <- function(solve) cacheMatrix <<- solve
   getmatrix <- function() cacheMatrix
+  
+  ## create a list of functions to use in the scope
   list(set = set, get = get, setmatrix = setmatrix, getmatrix = getmatrix)
 }
 
@@ -22,8 +26,14 @@ cacheSolve <- function(x,...) {
     message("getting the cached matrix")
     return(cacheMatrix)
   }
-  data <- x$get()
+  ## get the data from the makeCacheMatrix
+  data <- x$get() 
+  
+  ## take data and solve for inverse
   cacheMatrix <- solve(data)
+  
+  ## set the data into the object
   x$setmatrix(cacheMatrix)
+  
   cacheMatrix
 }
